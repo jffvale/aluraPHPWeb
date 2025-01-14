@@ -16,27 +16,23 @@ if (isset($_GET['id'])) {
 
   // Cria um novo objeto Produto com os dados do formulário
   if (isset($_POST['editar'])) {
-    // Verifica se nada foi selecionado, pegar o dado de 'imagemDb'
-    $imagem = "";
-    if (!empty($_POST['imagem'])){
-        $imagem = $_POST['imagem']; // Usa a nova imagem enviada
-    } else {
-        $imagem = $_POST['imagemDb']; // Usa a imagem existente do banco de dados
-    }
-
-    // var_dump($imagem);
-    // exit();
 
     $produto = new Produto(
       $_POST['id'],
       $_POST['tipo'],
       $_POST['nome'],
       $_POST['descricao'],
-      $_POST['preco'],
-      $imagem // Usa a imagem segundo a condição acima
+      $_POST['preco']
     );
 
-    
+    if (!empty($_FILES['imagem']['name'])) {
+      // unique id para garantir que o nome do arquivo seja único
+      $produto->setImagem(uniqid() . $_FILES['imagem']['name']); // posição 'name' do array FILES contém o nome do arquivo
+      move_uploaded_file($_FILES['imagem']['tmp_name'], $produto->getImagemFolder()); // move o arquivo para a pasta img/produtos
+
+      // var_dump($_FILES['imagem']);
+      // exit();
+    }
 
     // echo "Dados do formulário via POST\n" . "<br>";
     // var_dump($produto);
@@ -77,7 +73,7 @@ if (isset($_GET['id'])) {
       <img class="ornaments" src="img/ornaments-coffee.png" alt="ornaments">
     </section>
     <section class="container-form">
-      <form action="#" method="POST">
+      <form action="#" method="POST" enctype="multipart/form-data">
 
         <input type="hidden" name="id" value="<?= $produto->getId() ?>">
         <label for="nome">Nome</label>
@@ -100,7 +96,7 @@ if (isset($_GET['id'])) {
         <label for="preco">Preço</label>
         <input type="text" id="preco" name="preco" placeholder="Digite o preço do produto" value="<?= $produto->getPrecoFormatado() ?>" required>
 
-        <label for="imagem">Envie uma imagem do produto / Imagem atual</label>                                                                           
+        <label for="imagem">Envie uma imagem do produto / Imagem atual</label>
         <input type="hidden" name="imagemDb" id="imagemDb" value="<?= $produto->getImagem() ?>"><?= $produto->getImagem() ?>
 
         <input type="file" name="imagem" accept="image/*" id="imagem" placeholder="Envie uma imagem">
@@ -114,4 +110,5 @@ if (isset($_GET['id'])) {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js" integrity="sha512-Rdk63VC+1UYzGSgd3u2iadi0joUrcwX0IWp2rTh6KXFoAmgOjRS99Vynz1lJPT8dLjvo6JZOqpAHJyfCEZ5KoA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="js/index.js"></script>
 </body>
+
 </html>

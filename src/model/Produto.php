@@ -9,7 +9,7 @@ class Produto {
 
     // Construtor para inicializar os atributos da classe em PHP
     // O ?int é para indicar que o atributo pode ser nulo e a imagem padrão é o logo-serenatto.png
-    public function __construct(?int $id, string $tipo, string $nome, string $descricao, float $preco, string $imagem) {
+    public function __construct(?int $id, string $tipo, string $nome, string $descricao, float $preco, string $imagem = "logo-serenatto.png") {
         $this->id = $id;
         $this->tipo = $tipo;
         $this->nome = $nome;

@@ -77,24 +77,12 @@ class ProdutoRepository
     public function create(Produto $produto): void{
         $sqli = "INSERT INTO produtos (tipo, nome, descricao, preco, imagem) VALUES (:tipo, :nome, :descricao, :preco, :imagem)";
 
-        // Verifica se a imagem foi fornecida, caso contrário, usa o valor padrão
-        $imagem = $produto->getImagem();
-        if (empty($imagem)) {
-            $imagem = "logo-serenatto.png";
-        } else {
-            $imagem = $produto->getImagem();
-        }
-
-        // echo "Imagem: " . $imagem;
-        // var_dump($imagem);
-        // exit();
-
         $statement = $this->pdo->prepare($sqli);    // Prepara a query para ser executada
         $statement->bindValue(':tipo', $produto->getTipo());    // Substitui os valores da query
         $statement->bindValue(':nome', $produto->getNome());
         $statement->bindValue(':descricao', $produto->getDescricao());
         $statement->bindValue(':preco', $produto->getPreco());
-        $statement->bindValue(':imagem', $produto = $imagem);
+        $statement->bindValue(':imagem', $produto->getImagem());
         $statement->execute();
     }
 
