@@ -68,7 +68,7 @@ $produtos = $produtoRepository->buscarTodos();
         </tbody>
       </table>
       <a class="botao-cadastrar" href="cadastrarProduto.php">Cadastrar produto</a>
-      <form action="#" method="post">
+      <form action="geradorPdf.php" method="POST">
         <input type="submit" class="botao-cadastrar" value="Baixar Relatório" />
       </form>
     </section>

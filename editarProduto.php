@@ -96,9 +96,7 @@ if (isset($_GET['id'])) {
         <label for="preco">Preço</label>
         <input type="text" id="preco" name="preco" placeholder="Digite o preço do produto" value="<?= $produto->getPrecoFormatado() ?>" required>
 
-        <label for="imagem">Envie uma imagem do produto / Imagem atual</label>
-        <input type="hidden" name="imagemDb" id="imagemDb" value="<?= $produto->getImagem() ?>"><?= $produto->getImagem() ?>
-
+        <label for="imagem">Envie uma imagem do produto / Imagem atual:<br>"<?= $produto->getImagem() ?>"</label>
         <input type="file" name="imagem" accept="image/*" id="imagem" placeholder="Envie uma imagem">
 
         <input type="submit" name="editar" class="botao-cadastrar" value="Editar produto" />
